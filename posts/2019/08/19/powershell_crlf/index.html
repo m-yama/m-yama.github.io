@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>ablog build でまたしてもエラー &#8212; M-Yama BLOG</title>
+    <title>Powershellで改行コードをCRLFに一括置換する &#8212; M-Yama BLOG</title>
     
     <link rel="stylesheet" href="../../../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
@@ -62,30 +62,28 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="ablog-build">
-<h1>ablog build でまたしてもエラー<a class="headerlink" href="#ablog-build" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<p>Travis でまたしてもビルドエラーになってしまった。
-<a class="reference internal" href="../../../07/17/ablog-build-error/#ablog-build-error"><span class="std std-ref">前回のエラー</span></a> ではSphinxのバージョンを変更して対応したが、
-今回は <cite>docutils</cite> 内で発生。</p>
-<p>ちなみに、Pythonのバージョンは 2.7 。</p>
-<div class="section" id="id1">
-<h2>エラー内容<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">occurred</span><span class="p">:</span>
-  <span class="n">File</span> <span class="s2">&quot;/Users/myama/.pyenv/versions/2.7.13/lib/python2.7/site-packages/docutils/nodes.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">567</span><span class="p">,</span> <span class="ow">in</span> <span class="fm">__getitem__</span>
-    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-<span class="ne">KeyError</span><span class="p">:</span> <span class="s1">&#39;source&#39;</span>
+  <div class="section" id="powershellcrlf">
+<h1>Powershellで改行コードをCRLFに一括置換する<a class="headerlink" href="#powershellcrlf" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>Powershellで、フォルダ内（サブフォルダ含む）のファイルの改行コードをCRLFに一括置換する。</p>
+<p><strong>CSVだけ対象にし、文字コードがShift_JISの場合:</strong></p>
+<div class="highlight-powershell"><div class="highlight"><pre><span></span><span class="nb">ls </span><span class="n">-r</span> <span class="o">-file</span> <span class="n">-filter</span> <span class="p">*.</span><span class="n">csv</span> <span class="p">|</span> <span class="p">%</span> <span class="p">{</span> <span class="p">(</span><span class="nb">get-content</span> <span class="n">-encoding</span> <span class="k">Default</span> <span class="nv">$_</span><span class="p">.</span><span class="n">FullName</span><span class="p">)</span> <span class="n">-join</span> <span class="s2">&quot;</span><span class="se">`r`n</span><span class="s2">&quot;</span> <span class="p">|</span> <span class="nb">set-content</span> <span class="n">-encoding</span> <span class="k">Default</span> <span class="nv">$_</span><span class="p">.</span><span class="n">FullName</span> <span class="p">}</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id2">
-<h2>ひとまずの解消法<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>docutils 0.14 から発生するようになったっぽいので、 <cite>.travis.yml</cite> に以下の一文を追加。</p>
-<div class="highlight-diff"><div class="highlight"><pre><span></span> before_install:
-   - pip install sphinx==1.5.6
-<span class="gi">+  - pip install docutils==0.13.1</span>
-   - pip install ablog
+<p><strong>CSV以外を対象にし、文字コードがUTF8の場合:</strong></p>
+<div class="highlight-powershell"><div class="highlight"><pre><span></span><span class="nb">ls </span><span class="n">-r</span> <span class="o">-file</span> <span class="n">-exclude</span> <span class="p">*.</span><span class="n">csv</span> <span class="p">|</span> <span class="p">%</span> <span class="p">{</span> <span class="p">(</span><span class="nb">get-content</span> <span class="n">-encoding</span> <span class="n">UTF8</span> <span class="nv">$_</span><span class="p">.</span><span class="n">FullName</span><span class="p">)</span> <span class="n">-join</span> <span class="s2">&quot;</span><span class="se">`r`n</span><span class="s2">&quot;</span> <span class="p">|</span> <span class="nb">set-content</span> <span class="n">-encoding</span> <span class="n">UTF8</span> <span class="nv">$_</span><span class="p">.</span><span class="n">FullName</span> <span class="p">}</span>
 </pre></div>
 </div>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">-filter</span></code> で対象のファイルの拡張子を指定。</li>
+<li><code class="docutils literal"><span class="pre">-exclude</span></code> で除外するファイルの拡張子を指定。</li>
+<li><code class="docutils literal"><span class="pre">`r`n</span></code> を <code class="docutils literal"><span class="pre">`n</span></code> に書き換えれば、LFに一括置換になるが、最後にCRLFの改行が入る。最後の改行を省くには <code class="docutils literal"><span class="pre">set-content</span> <span class="pre">-NoNewline</span></code> とする。</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<ul class="last simple">
+<li>上記スクリプトはファイル自体が書き換わるので注意。</li>
+<li>UTF8はBOM付きになるので注意。BOM無しにするには <code class="docutils literal"><span class="pre">set-content</span></code> ではなく .NET Framework の <code class="docutils literal"><span class="pre">[System.IO.File]::WriteAllLines</span></code> メソッドなどを使う。</li>
+</ul>
 </div>
 </div>
 
@@ -98,21 +96,14 @@
   <span style="float: left;">
   
   
-  <a href="../../../07/17/ablog-build-error/">
+  <a href="../../15/onemix3_caps_to_ime_switch/">
     <i class="fa fa-arrow-circle-left"></i>
-    ablog build でエラー
+    OneMix3でCapsキーをIMEオン/オフキーに変更した
   </a>
   
   </span>
   <span>&nbsp;</span>
   <span style="float: right;">
-  
-  
-  <a href="../../11/travis-warning-log/">
-    Server Name Indication チェックが出来ない警告ログ
-    <i class="fa fa-arrow-circle-right"></i>
-  </a>
-  </span>
   
 </div>
 
@@ -123,9 +114,9 @@
     <div id="disqus_thread"></div>
     <script type="text/javascript">
         var disqus_shortname = 'm-yama';
-        var disqus_identifier = '/posts/2017/08/10/ablog-build-error-occured-in-docutils/';
-        var disqus_title = 'ablog build でまたしてもエラー';
-        var disqus_url = 'https://m-yama.github.io/posts/2017/08/10/ablog-build-error-occured-in-docutils';
+        var disqus_identifier = '/posts/2019/08/19/powershell_crlf/';
+        var disqus_title = 'Powershellで改行コードをCRLFに一括置換する';
+        var disqus_url = 'https://m-yama.github.io/posts/2019/08/19/powershell_crlf';
 
         (function() {
             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -174,7 +165,7 @@
   <h2>
   
   <i class="fa fa-calendar"></i>
-    2017-08-10
+    2019-08-19
   
   </h2>
 
@@ -200,7 +191,7 @@
   <li><i class="fa-fw fa fa-tag"></i>
     
       
-      <a href="../../../../../blog/tag/ablog/">ablog</a>
+      <a href="../../../../../blog/tag/powershell/">powershell</a>
       
     </li>
   
@@ -219,7 +210,7 @@
     }());
     </script>
     <i class="fa-fw fa fa-comments"></i>
-    <a href="#disqus_thread" data-disqus-identifier="/posts/2017/08/10/ablog-build-error-occured-in-docutils/"> </a>
+    <a href="#disqus_thread" data-disqus-identifier="/posts/2019/08/19/powershell_crlf/"> </a>
   </li>
   
   </ul>
@@ -235,15 +226,15 @@
   <ul>
     
     
-      <li><a href="../../../../2019/08/19/powershell_crlf/">Aug 19 - Powershellで改行コードをCRLFに一括置換する</a></li>
-    
-      <li><a href="../../../../2019/08/15/onemix3_caps_to_ime_switch/">Aug 15 - OneMix3でCapsキーをIMEオン/オフキーに変更した</a></li>
+      <li><a href="../../15/onemix3_caps_to_ime_switch/">Aug 15 - OneMix3でCapsキーをIMEオン/オフキーに変更した</a></li>
     
       <li><a href="../../../../2018/04/07/travis_python_version/">Apr 07 - Travis-CIでのPythonバージョンの変更</a></li>
     
-      <li><a href="../../../10/01/windows-pin-error/">Oct 01 - Windows10でPINコードを入力してログインしようとするとエラーが発生</a></li>
+      <li><a href="../../../../2017/10/01/windows-pin-error/">Oct 01 - Windows10でPINコードを入力してログインしようとするとエラーが発生</a></li>
     
-      <li><a href="../../12/blackberry-keyone-topics/">Aug 12 - BlackBerry KEYone 小ネタ集</a></li>
+      <li><a href="../../../../2017/08/12/blackberry-keyone-topics/">Aug 12 - BlackBerry KEYone 小ネタ集</a></li>
+    
+      <li><a href="../../../../2017/08/11/embed-twitter/">Aug 11 - サイドバーにツイッターのタイムラインを埋め込む</a></li>
     
   </ul>
 
@@ -390,7 +381,7 @@
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="../../../../../_sources/posts/2017/08/10/ablog-build-error-occured-in-docutils.rst.txt"
+      <a href="../../../../../_sources/posts/2019/08/19/powershell_crlf.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

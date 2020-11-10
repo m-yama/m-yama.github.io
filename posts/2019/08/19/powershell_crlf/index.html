@@ -65,11 +65,14 @@
   <div class="section" id="powershellcrlf">
 <h1>Powershellで改行コードをCRLFに一括置換する<a class="headerlink" href="#powershellcrlf" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>Powershellで、フォルダ内（サブフォルダ含む）のファイルの改行コードをCRLFに一括置換する。</p>
-<p><strong>CSVだけ対象にし、文字コードがShift_JISの場合:</strong></p>
+<div class="section" id="csvshift-jis">
+<h2>CSVだけ対象にし、文字コードがShift_JISの場合<a class="headerlink" href="#csvshift-jis" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="highlight-powershell"><div class="highlight"><pre><span></span><span class="nb">ls </span><span class="n">-r</span> <span class="o">-file</span> <span class="n">-filter</span> <span class="p">*.</span><span class="n">csv</span> <span class="p">|</span> <span class="p">%</span> <span class="p">{</span> <span class="p">(</span><span class="nb">get-content</span> <span class="n">-encoding</span> <span class="k">Default</span> <span class="nv">$_</span><span class="p">.</span><span class="n">FullName</span><span class="p">)</span> <span class="n">-join</span> <span class="s2">&quot;</span><span class="se">`r`n</span><span class="s2">&quot;</span> <span class="p">|</span> <span class="nb">set-content</span> <span class="n">-encoding</span> <span class="k">Default</span> <span class="nv">$_</span><span class="p">.</span><span class="n">FullName</span> <span class="p">}</span>
 </pre></div>
 </div>
-<p><strong>CSV以外を対象にし、文字コードがUTF8の場合:</strong></p>
+</div>
+<div class="section" id="csvutf8">
+<h2>CSV以外を対象にし、文字コードがUTF8の場合<a class="headerlink" href="#csvutf8" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="highlight-powershell"><div class="highlight"><pre><span></span><span class="nb">ls </span><span class="n">-r</span> <span class="o">-file</span> <span class="n">-exclude</span> <span class="p">*.</span><span class="n">csv</span> <span class="p">|</span> <span class="p">%</span> <span class="p">{</span> <span class="p">(</span><span class="nb">get-content</span> <span class="n">-encoding</span> <span class="n">UTF8</span> <span class="nv">$_</span><span class="p">.</span><span class="n">FullName</span><span class="p">)</span> <span class="n">-join</span> <span class="s2">&quot;</span><span class="se">`r`n</span><span class="s2">&quot;</span> <span class="p">|</span> <span class="nb">set-content</span> <span class="n">-encoding</span> <span class="n">UTF8</span> <span class="nv">$_</span><span class="p">.</span><span class="n">FullName</span> <span class="p">}</span>
 </pre></div>
 </div>
@@ -84,6 +87,7 @@
 <li>上記スクリプトはファイル自体が書き換わるので注意。</li>
 <li>UTF8はBOM付きになるので注意。BOM無しにするには <code class="docutils literal"><span class="pre">set-content</span></code> ではなく .NET Framework の <code class="docutils literal"><span class="pre">[System.IO.File]::WriteAllLines</span></code> メソッドなどを使う。</li>
 </ul>
+</div>
 </div>
 </div>
 
@@ -145,18 +149,6 @@
 
 
 
-
-
-    
-
-<p>
-<a class="badge" href="https://travis-ci.org/m-yama/myblog">
-    <img
-        alt="https://secure.travis-ci.org/m-yama/myblog.svg?branch=master"
-        src="https://secure.travis-ci.org/m-yama/myblog.svg?branch=master"
-    />
-</a>
-</p>
 
 
 

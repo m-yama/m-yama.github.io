@@ -1,68 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<!DOCTYPE html>
 
-<html lang="ja">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
     <title>ABlogを使ってSphinxでブログを書いてみる &#8212; M-Yama BLOG</title>
-    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    
     <link rel="stylesheet" href="../../../../../_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
-    <script src="../../../../../_static/jquery.js"></script>
-    <script src="../../../../../_static/underscore.js"></script>
-    <script src="../../../../../_static/doctools.js"></script>
-    <script src="../../../../../_static/language_data.js"></script>
-    <script src="../../../../../_static/translations.js"></script>
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../../_static/translations.js"></script>
     <link rel="shortcut icon" href="../../../../../_static/favicon.ico"/>
     <link rel="author" title="このドキュメントについて" href="../../../../../about/" />
     <link rel="index" title="索引" href="../../../../../genindex/" />
-    <link rel="search" title="検索" href="../../../../../search/" /> 
+    <link rel="search" title="検索" href="../../../../../search/" />
+  
    
   <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
   
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
- 
-<link
-  rel="alternate"
-  type="application/atom+xml"
-  href="../../../../../blog/atom.xml"
-  title="M-Yama BLOG"
-/>
- 
-<link
-  rel="stylesheet"
-  href="../../../../../_static/css/font-awesome.min.css"
-  type="text/css"
-/>
 
-<style type="text/css">
-  ul.ablog-archive {
-    list-style: none;
-    overflow: auto;
-    margin-left: 0px;
-  }
-  ul.ablog-archive li {
-    float: left;
-    margin-right: 5px;
-    font-size: 80%;
-  }
-  ul.postlist a {
-    font-style: italic;
-  }
-  ul.postlist-style-disc {
-    list-style-type: disc;
-  }
-  ul.postlist-style-none {
-    list-style-type: none;
-  }
-  ul.postlist-style-circle {
-    list-style-type: circle;
-  }
-</style>
+  
+  <link rel="alternate" type="application/atom+xml"  href="../../../../../blog/atom.xml" title="M-Yama BLOG">
+  
+  
+  <link rel="stylesheet" href="../../../../../_static/css/font-awesome.min.css" type="text/css" />
+  
+  <style type="text/css">
+    ul.ablog-archive {list-style: none; overflow: auto; margin-left: 0px}
+    ul.ablog-archive li {float: left; margin-right: 5px; font-size: 80%}
+    ul.postlist a {font-style: italic;}
+    ul.postlist-style-disc {list-style-type: disc;}
+    ul.postlist-style-none {list-style-type: none;}
+    ul.postlist-style-circle {list-style-type: circle;}
+  </style>
 
-  </head><body>
+  </head>
+  <body role="document">
   
 
     <div class="document">
@@ -71,20 +61,21 @@
           
 
           <div class="body" role="main">
-             <div class="section" id="ablogsphinx">
+            
+  <div class="section" id="ablogsphinx">
 <h1>ABlogを使ってSphinxでブログを書いてみる<a class="headerlink" href="#ablogsphinx" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>Sphinxでブログを書いてみたいと思い、Googleで検索したら <a class="reference external" href="http://ablog.readthedocs.io/">ABlog for Sphinx</a> というのが見つかったので、使ってみる。</p>
 <div class="section" id="id1">
 <h2>いきなりつまづく<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>最初、Windowsで試したところ、 <code class="docutils literal notranslate"><span class="pre">ablog</span> <span class="pre">start</span></code> で生成されたファイルが <em>shift_jis</em> で作られていたため、 <code class="docutils literal notranslate"><span class="pre">ablog</span> <span class="pre">build</span></code> すると <cite>UnicodeDecodeError</cite> になって進まない・・・</p>
+<p>最初、Windowsで試したところ、 <code class="docutils literal"><span class="pre">ablog</span> <span class="pre">start</span></code> で生成されたファイルが <em>shift_jis</em> で作られていたため、 <code class="docutils literal"><span class="pre">ablog</span> <span class="pre">build</span></code> すると <cite>UnicodeDecodeError</cite> になって進まない・・・</p>
 <p>open関数を使っているところを、</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">encode</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">encode</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>というふうに書き換えれば一応動きますが、ソースをいじるのも面倒なので、とりあえず Mac で書いてます。</p>
 <div class="admonition note">
-<p class="admonition-title">注釈</p>
-<p>最終的には Mac と Windows 両方で使えるようにしたい。</p>
+<p class="first admonition-title">注釈</p>
+<p class="last">最終的には Mac と Windows 両方で使えるようにしたい。</p>
 </div>
 </div>
 <div class="section" id="id2">
@@ -92,15 +83,15 @@
 <p>そういえばPython3から、open関数の引数で適切なエンコードを指定しないと開けなくなった、と、何かで見た気がします。
 WindowsではPython2.7で動かすようにしたら、上記のエラーは出なくなりました。</p>
 <div class="note update admonition">
-<p class="admonition-title">Updated on 2016-05-20</p>
-<p>Python3から encoding 引数が追加され、デフォルトではOSで設定されている既定の文字コードが使われるようです。
+<p class="first admonition-title">Updated on 2016-05-20</p>
+<p class="last">Python3から encoding 引数が追加され、デフォルトではOSで設定されている既定の文字コードが使われるようです。
 <a class="reference external" href="http://docs.python.jp/3.3/library/functions.html#open">組み込み関数 - open()</a></p>
 </div>
 </div>
 <div class="section" id="id3">
 <h2>テーマ変更がうまくいかない<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>テーマを変えようとしたら、 <code class="docutils literal notranslate"><span class="pre">ablog</span> <span class="pre">build</span></code> すると以下のエラーメッセージが出てビルドできませんでした。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">occurred</span><span class="p">:</span>
+<p>テーマを変えようとしたら、 <code class="docutils literal"><span class="pre">ablog</span> <span class="pre">build</span></code> すると以下のエラーメッセージが出てビルドできませんでした。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="n">occurred</span><span class="p">:</span>
   <span class="n">File</span> <span class="s2">&quot;c:\python27\lib\site-packages\sphinx\jinja2glue.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">159</span><span class="p">,</span> <span class="ow">in</span> <span class="n">get_source</span>
     <span class="k">raise</span> <span class="n">TemplateNotFound</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
 <span class="n">TemplateNotFound</span><span class="p">:</span> <span class="n">about</span><span class="o">.</span><span class="n">html</span>
@@ -110,57 +101,49 @@ WindowsではPython2.7で動かすようにしたら、上記のエラーは出�
 </div>
 </div>
 
-<div class="section">
-     
-<div class="section">
-  <span style="float: left">
+  <div class="section">
+  
     
+
+
+<div class="section">
+  <span style="float: left;">
+  
   </span>
   <span>&nbsp;</span>
-  <span style="float: right">
-     
-    <a href="../../16/deploy-to-github/">
-      Ablogで書いたSphinxブログをGithubにデプロイしてみる <i
-        class="fa fa-arrow-circle-right"
-      ></i
-      >
-    </a>
-    
-  </span>
-</div>
+  <span style="float: right;">
   
-  <div class="section">
+  
+  <a href="../../16/deploy-to-github/">
+    Ablogで書いたSphinxブログをGithubにデプロイしてみる
+    <i class="fa fa-arrow-circle-right"></i>
+  </a>
+  </span>
+  
+</div>
+
+  
+  
+    <div class="section">
     <h2>Comments</h2>
     <div id="disqus_thread"></div>
     <script type="text/javascript">
-      var disqus_shortname = "m-yama";
-      var disqus_identifier = "/posts/2016/05/15/using-ablog/";
-      var disqus_title = "ABlogを使ってSphinxでブログを書いてみる";
-      var disqus_url = "https://m-yama.github.io/posts/2016/05/15/using-ablog";
+        var disqus_shortname = 'm-yama';
+        var disqus_identifier = '/posts/2016/05/15/using-ablog/';
+        var disqus_title = 'ABlogを使ってSphinxでブログを書いてみる';
+        var disqus_url = 'https://m-yama.github.io/posts/2016/05/15/using-ablog';
 
-      (function () {
-        var dsq = document.createElement("script");
-        dsq.type = "text/javascript";
-        dsq.async = true;
-        dsq.src = "//" + disqus_shortname + ".disqus.com/embed.js";
-        (
-          document.getElementsByTagName("head")[0] ||
-          document.getElementsByTagName("body")[0]
-        ).appendChild(dsq);
-      })();
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
     </script>
-    <noscript
-      >Please enable JavaScript to view the
-      <a href="https://disqus.com/?ref_noscript"
-        >comments powered by Disqus.</a
-      ></noscript
-    >
-    <a href="https://disqus.com" class="dsq-brlink"
-      >comments powered by <span class="logo-disqus">Disqus</span></a
-    >
-  </div>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
   
-</div>
+  </div>
 
           </div>
           
@@ -179,252 +162,223 @@ WindowsではPython2.7で動かすようにしたら、上記のエラーは出�
 
 
 
-  
-<h2>
-   <i class="fa fa-calendar"></i>
-  2016-05-15 
-</h2>
 
-<ul>
   
-<li id="published">
-  <span
-    ><i class="fa fa-pencil-square-o"></i></span
-  >
-  2016-05-20
-</li>
+  
+  <h2>
+  
+  <i class="fa fa-calendar"></i>
+    2016-05-15
+  
+  </h2>
+
+  <ul>
     
-<li id="category">
-  <span
-    ><i class="fa-fw fa fa-folder-open"></i></span
-  >
-   
-  <a href="../../../../../blog/category/blog/">blog</a>  
-</li>
- 
-<li id="tags">
-  <span
-    ><i class="fa-fw fa fa-tags"></i> </span
-  >
-   
-  <a href="../../../../../blog/tag/ablog/">ablog</a>   
-  <a href="../../../../../blog/tag/sphinx/">sphinx</a>  
-</li>
- 
-<li id="comments">
-  <script type="text/javascript">
+  <li><i class="fa fa-pencil-square-o"></i>
+    2016-05-20</li>
+  
+
+  
+
+  
+
+  
+
+  
+  <li><i class="fa-fw fa fa-folder-open"></i>
+    
+      
+      <a href="../../../../../blog/category/blog/">blog</a>
+      
+    </li>
+  
+
+  
+  <li><i class="fa-fw fa fa-tags"></i>
+      
+    
+      
+      <a href="../../../../../blog/tag/ablog/">ablog</a>,
+      
+    
+      
+      <a href="../../../../../blog/tag/sphinx/">sphinx</a>
+      
+    </li>
+  
+  
+  <li>
+    <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = "m-yama"; // required: replace example with your forum shortname
+    var disqus_shortname = 'm-yama'; // required: replace example with your forum shortname
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function () {
-      var s = document.createElement("script");
-      s.async = true;
-      s.type = "text/javascript";
-      s.src = "//" + disqus_shortname + ".disqus.com/count.js";
-      (
-        document.getElementsByTagName("HEAD")[0] ||
-        document.getElementsByTagName("BODY")[0]
-      ).appendChild(s);
-    })();
-  </script>
-  <i class="fa-fw fa fa-comments"></i>
-  <a
-    href="#disqus_thread"
-    data-disqus-identifier="/posts/2016/05/15/using-ablog/"
-  >
-    </a
-  >
-</li>
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+    </script>
+    <i class="fa-fw fa fa-comments"></i>
+    <a href="#disqus_thread" data-disqus-identifier="/posts/2016/05/15/using-ablog/"> </a>
+  </li>
+  
+  </ul>
 
-</ul>
+
 <h3>ナビゲーション</h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../about/">About m-yama</a></li>
 </ul>
 
 
-<h3>
-  <a href="../../../../../blog/">Recent Posts</a>
-</h3>
-<ul>
-   
-  <li>
-    <a href="../../../../2020/11-12/ablog_upgrade/"
-      >12 November - Ablogのバージョンをアップグレード</a
-    >
-  </li>
-  
-  <li>
-    <a href="../../../../2019/08/19/powershell_crlf/"
-      >19 August - Powershellで改行コードをCRLFに一括置換する</a
-    >
-  </li>
-  
-  <li>
-    <a href="../../../../2019/08/15/onemix3_caps_to_ime_switch/"
-      >15 August - OneMix3でCapsキーをIMEオン/オフキーに変更した</a
-    >
-  </li>
-  
-  <li>
-    <a href="../../../../2018/04/07/travis_python_version/"
-      >07 April - Travis-CIでのPythonバージョンの変更</a
-    >
-  </li>
-  
-  <li>
-    <a href="../../../../2017/10/01/windows-pin-error/"
-      >01 October - Windows10でPINコードを入力してログインしようとするとエラーが発生</a
-    >
-  </li>
-  
-</ul>
+  <h3><a href="../../../../../blog/">Recent Posts</a></h3>
+  <ul>
+    
+    
+      <li><a href="../../../../2019/08/19/powershell_crlf/">Aug 19 - Powershellで改行コードをCRLFに一括置換する</a></li>
+    
+      <li><a href="../../../../2019/08/15/onemix3_caps_to_ime_switch/">Aug 15 - OneMix3でCapsキーをIMEオン/オフキーに変更した</a></li>
+    
+      <li><a href="../../../../2018/04/07/travis_python_version/">Apr 07 - Travis-CIでのPythonバージョンの変更</a></li>
+    
+      <li><a href="../../../../2017/10/01/windows-pin-error/">Oct 01 - Windows10でPINコードを入力してログインしようとするとエラーが発生</a></li>
+    
+      <li><a href="../../../../2017/08/12/blackberry-keyone-topics/">Aug 12 - BlackBerry KEYone 小ネタ集</a></li>
+    
+  </ul>
 
-<h3><a href="../../../../../blog/tag/">Tags</a></h3>
-<style type="text/css">
-  ul.ablog-cloud {
-    list-style: none;
-    overflow: auto;
-  }
-  ul.ablog-cloud li {
-    float: left;
-    height: 20pt;
-    line-height: 18pt;
-    margin-right: 5px;
-  }
-  ul.ablog-cloud a {
-    text-decoration: none;
-    vertical-align: middle;
-  }
-  li.ablog-cloud-1 {
-    font-size: 80%;
-  }
-  li.ablog-cloud-2 {
-    font-size: 95%;
-  }
-  li.ablog-cloud-3 {
-    font-size: 110%;
-  }
-  li.ablog-cloud-4 {
-    font-size: 125%;
-  }
-  li.ablog-cloud-5 {
-    font-size: 140%;
-  }
-</style>
-<ul class="ablog-cloud">
-   
-  <li class="ablog-cloud ablog-cloud-5">
-    <a href="../../../../../blog/tag/ablog/">ablog</a>
-  </li>
+  <h3><a href="../../../../../blog/tag/">Tags</a></h3>
+  <style type="text/css">
+    ul.ablog-cloud {list-style: none; overflow: auto;}
+    ul.ablog-cloud li {float: left; height: 20pt; line-height: 18pt; margin-right: 5px;}
+    ul.ablog-cloud a {text-decoration: none; vertical-align: middle;}
+    li.ablog-cloud-1{font-size: 80%;}
+    li.ablog-cloud-2{font-size: 95%;}
+    li.ablog-cloud-3{font-size: 110%;}
+    li.ablog-cloud-4{font-size: 125%;}
+    li.ablog-cloud-5{font-size: 140%;}
+  </style>
+  <ul class="ablog-cloud">
     
-  <li class="ablog-cloud ablog-cloud-1">
-    <a href="../../../../../blog/tag/blackberry/">blackberry</a>
-  </li>
+      
+      <li class="ablog-cloud ablog-cloud-5">
+        <a href="../../../../../blog/tag/ablog/">ablog</a></li>
+      
     
-  <li class="ablog-cloud ablog-cloud-1">
-    <a href="../../../../../blog/tag/font/">font</a>
-  </li>
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../../../../../blog/tag/blackberry/">blackberry</a></li>
+      
     
-  <li class="ablog-cloud ablog-cloud-3">
-    <a href="../../../../../blog/tag/gadget/">gadget</a>
-  </li>
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../../../../../blog/tag/font/">font</a></li>
+      
     
-  <li class="ablog-cloud ablog-cloud-2">
-    <a href="../../../../../blog/tag/github/">github</a>
-  </li>
+      
+      <li class="ablog-cloud ablog-cloud-3">
+        <a href="../../../../../blog/tag/gadget/">gadget</a></li>
+      
     
-  <li class="ablog-cloud ablog-cloud-1">
-    <a href="../../../../../blog/tag/keyboard/">keyboard</a>
-  </li>
+      
+      <li class="ablog-cloud ablog-cloud-2">
+        <a href="../../../../../blog/tag/github/">github</a></li>
+      
     
-  <li class="ablog-cloud ablog-cloud-1">
-    <a href="../../../../../blog/tag/onemix/">onemix</a>
-  </li>
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../../../../../blog/tag/keyboard/">keyboard</a></li>
+      
     
-  <li class="ablog-cloud ablog-cloud-1">
-    <a href="../../../../../blog/tag/powershell/">powershell</a>
-  </li>
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../../../../../blog/tag/onemix/">onemix</a></li>
+      
     
-  <li class="ablog-cloud ablog-cloud-1">
-    <a href="../../../../../blog/tag/python/">python</a>
-  </li>
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../../../../../blog/tag/powershell/">powershell</a></li>
+      
     
-  <li class="ablog-cloud ablog-cloud-1">
-    <a href="../../../../../blog/tag/smartphone/">smartphone</a>
-  </li>
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../../../../../blog/tag/python/">python</a></li>
+      
     
-  <li class="ablog-cloud ablog-cloud-1">
-    <a href="../../../../../blog/tag/smartwatch/">smartwatch</a>
-  </li>
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../../../../../blog/tag/smartphone/">smartphone</a></li>
+      
     
-  <li class="ablog-cloud ablog-cloud-3">
-    <a href="../../../../../blog/tag/sphinx/">sphinx</a>
-  </li>
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../../../../../blog/tag/smartwatch/">smartwatch</a></li>
+      
     
-  <li class="ablog-cloud ablog-cloud-1">
-    <a href="../../../../../blog/tag/travis/">travis</a>
-  </li>
+      
+      <li class="ablog-cloud ablog-cloud-3">
+        <a href="../../../../../blog/tag/sphinx/">sphinx</a></li>
+      
     
-  <li class="ablog-cloud ablog-cloud-1">
-    <a href="../../../../../blog/tag/twitter/">twitter</a>
-  </li>
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../../../../../blog/tag/travis/">travis</a></li>
+      
     
-  <li class="ablog-cloud ablog-cloud-1">
-    <a href="../../../../../blog/tag/windows/">windows</a>
-  </li>
-   
-</ul>
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../../../../../blog/tag/twitter/">twitter</a></li>
+      
+    
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../../../../../blog/tag/windows/">windows</a></li>
+      
+    
+  </ul>
 
-<h3>
-  <a href="../../../../../blog/category/">Categories</a>
-</h3>
-<ul>
-   
-  <li>
-    <a href="../../../../../blog/category/blog/">blog (23)</a>
-  </li>
-   
-</ul>
+  <h3><a href="../../../../../blog/category/">Categories</a></h3>
+  <ul>
+  
+    
+    <li><a href="../../../../../blog/category/blog/">blog (22)</a></li>
+    
+  
+  </ul>
 
-<h3>
-  <a href="../../../../../blog/archive/">Archives</a>
-</h3>
-<ul>
-   
-  <li>
-    <a href="../../../../../blog/2020/">2020 (1)</a>
-  </li>
+  <h3><a href="../../../../../blog/archive/">Archives</a></h3>
+  <ul>
+  
     
-  <li>
-    <a href="../../../../../blog/2019/">2019 (2)</a>
-  </li>
+    <li><a href="../../../../../blog/2019/">2019 (2)</a></li>
     
-  <li>
-    <a href="../../../../../blog/2018/">2018 (1)</a>
-  </li>
+  
     
-  <li>
-    <a href="../../../../../blog/2017/">2017 (10)</a>
-  </li>
+    <li><a href="../../../../../blog/2018/">2018 (1)</a></li>
     
-  <li>
-    <a href="../../../../../blog/2016/">2016 (9)</a>
-  </li>
-   
-</ul>
+  
+    
+    <li><a href="../../../../../blog/2017/">2017 (10)</a></li>
+    
+  
+    
+    <li><a href="../../../../../blog/2016/">2016 (9)</a></li>
+    
+  
+  </ul>
 
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">クイック検索</h3>
-    <div class="searchformwrapper">
+  <h3>クイック検索</h3>
     <form class="search" action="../../../../../search/" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="検索" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
     </form>
-    </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -434,7 +388,7 @@ WindowsではPython2.7で動かすようにしたら、上記のエラーは出�
       &copy;2016, m-yama.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.6</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

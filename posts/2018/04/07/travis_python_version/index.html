@@ -1,68 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<!DOCTYPE html>
 
-<html lang="ja">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
     <title>Travis-CIでのPythonバージョンの変更 &#8212; M-Yama BLOG</title>
-    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    
     <link rel="stylesheet" href="../../../../../_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
-    <script src="../../../../../_static/jquery.js"></script>
-    <script src="../../../../../_static/underscore.js"></script>
-    <script src="../../../../../_static/doctools.js"></script>
-    <script src="../../../../../_static/language_data.js"></script>
-    <script src="../../../../../_static/translations.js"></script>
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../../_static/translations.js"></script>
     <link rel="shortcut icon" href="../../../../../_static/favicon.ico"/>
     <link rel="author" title="このドキュメントについて" href="../../../../../about/" />
     <link rel="index" title="索引" href="../../../../../genindex/" />
-    <link rel="search" title="検索" href="../../../../../search/" /> 
+    <link rel="search" title="検索" href="../../../../../search/" />
+  
    
   <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
   
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
- 
-<link
-  rel="alternate"
-  type="application/atom+xml"
-  href="../../../../../blog/atom.xml"
-  title="M-Yama BLOG"
-/>
- 
-<link
-  rel="stylesheet"
-  href="../../../../../_static/css/font-awesome.min.css"
-  type="text/css"
-/>
 
-<style type="text/css">
-  ul.ablog-archive {
-    list-style: none;
-    overflow: auto;
-    margin-left: 0px;
-  }
-  ul.ablog-archive li {
-    float: left;
-    margin-right: 5px;
-    font-size: 80%;
-  }
-  ul.postlist a {
-    font-style: italic;
-  }
-  ul.postlist-style-disc {
-    list-style-type: disc;
-  }
-  ul.postlist-style-none {
-    list-style-type: none;
-  }
-  ul.postlist-style-circle {
-    list-style-type: circle;
-  }
-</style>
+  
+  <link rel="alternate" type="application/atom+xml"  href="../../../../../blog/atom.xml" title="M-Yama BLOG">
+  
+  
+  <link rel="stylesheet" href="../../../../../_static/css/font-awesome.min.css" type="text/css" />
+  
+  <style type="text/css">
+    ul.ablog-archive {list-style: none; overflow: auto; margin-left: 0px}
+    ul.ablog-archive li {float: left; margin-right: 5px; font-size: 80%}
+    ul.postlist a {font-style: italic;}
+    ul.postlist-style-disc {list-style-type: disc;}
+    ul.postlist-style-none {list-style-type: none;}
+    ul.postlist-style-circle {list-style-type: circle;}
+  </style>
 
-  </head><body>
+  </head>
+  <body role="document">
   
 
     <div class="document">
@@ -71,13 +61,14 @@
           
 
           <div class="body" role="main">
-             <div class="section" id="travis-cipython">
+            
+  <div class="section" id="travis-cipython">
 <span id="post-apr-07-2018"></span><h1>Travis-CIでのPythonバージョンの変更<a class="headerlink" href="#travis-cipython" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>このブログは <a class="reference external" href="http://ablog.readthedocs.io/">Ablog</a> を使用しており、ブログを書いてgithubにpushした時に、自動的にビルドしてgithub.ioにデプロイするためにTravis-CIを使用している。</p>
 <p>Travis-CIでPython3.6を使おうと .travis.yaml のPythonバージョンを書き換えたところ、
 エラーが発生してビルドできない状態になった。</p>
 <p>エラーログは以下の通り。</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">source</span> ~/virtualenv/python3.6_with_system_site_packages/bin/activate
+<div class="highlight-sh"><div class="highlight"><pre><span></span>$ <span class="nb">source</span> ~/virtualenv/python3.6_with_system_site_packages/bin/activate
 /home/travis/.travis/job_stages: line <span class="m">57</span>: /home/travis/virtualenv/python3.6_with_system_site_packages/bin/activate: No such file or directory
 The <span class="nb">command</span> <span class="s2">&quot;source ~/virtualenv/python3.6_with_system_site_packages/bin/activate&quot;</span> failed and exited with <span class="m">1</span> during .
 Your build has been stopped.
@@ -97,76 +88,70 @@ If you need to install Python packages, do it via pip and not apt.</p>
 もしPythonパッケージをインストールする必要があるなら、aptではなくpip経由でインストールしてください。）</p>
 <p>If you decide to use apt anyway, note that for compatibility reasons, you’ll only be able to use the default Python versions that are available in Ubuntu (e.g. for Trusty, this means 2.7.6 and 3.4.3).</p>
 <p>（とにかくaptを使うと決めた場合は、互換性の理由により、Ubuntuで使用可能なデフォルトのPythonバージョンしか使用できないことに注意して下さい。（例えば Trustyでは、2.7.6 と 3.4.3 ということです））</p>
-<p>To access the packages inside the virtualenv, you will need to specify that it should be created with the --system-site-packages option. To do this, include the following in your .travis.yml:</p>
-<p>（virtualenv内のパッケージにアクセスするには、 <code class="docutils literal notranslate"><span class="pre">--system-site-packages</span></code> オプション付きで作成されるよう指定する必要があります。そうするには、 .travis.yml に以下の内容を含めてください。）</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">language</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">python</span>
+<p>To access the packages inside the virtualenv, you will need to specify that it should be created with the &#8211;system-site-packages option. To do this, include the following in your .travis.yml:</p>
+<p>（virtualenv内のパッケージにアクセスするには、 <code class="docutils literal"><span class="pre">--system-site-packages</span></code> オプション付きで作成されるよう指定する必要があります。そうするには、 .travis.yml に以下の内容を含めてください。）</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span></span><span class="nt">language</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">python</span>
 <span class="nt">virtualenv</span><span class="p">:</span>
   <span class="nt">system_site_packages</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
 </pre></div>
 </div>
 </div></blockquote>
 <hr class="docutils" />
-<p>要は、 <code class="docutils literal notranslate"><span class="pre">system_site_packages</span></code> が <em>true</em> になっていると、システムのデフォルトのPythonを使用する、ということらしい。</p>
-<p>今回のエラーは、Ablogを使い始めた時に何も調べずAblogのサイトにあったサンプルの .travis.yaml をそのまま使っていたため、 <code class="docutils literal notranslate"><span class="pre">system_site_packages</span></code> が <em>true</em> になっていたことが原因だった。</p>
-<p>エラーを解消するには、 <code class="docutils literal notranslate"><span class="pre">system_site_packages</span></code> を <em>false</em> にするか、必要なければ virtualenv のセクション自体削除することで、
+<p>要は、 <code class="docutils literal"><span class="pre">system_site_packages</span></code> が <em>true</em> になっていると、システムのデフォルトのPythonを使用する、ということらしい。</p>
+<p>今回のエラーは、Ablogを使い始めた時に何も調べずAblogのサイトにあったサンプルの .travis.yaml をそのまま使っていたため、 <code class="docutils literal"><span class="pre">system_site_packages</span></code> が <em>true</em> になっていたことが原因だった。</p>
+<p>エラーを解消するには、 <code class="docutils literal"><span class="pre">system_site_packages</span></code> を <em>false</em> にするか、必要なければ virtualenv のセクション自体削除することで、
 使いたいバージョンのPythonを Travis-CI 上で使えるようになる。</p>
 </div>
 
-<div class="section">
-     
-<div class="section">
-  <span style="float: left">
-     
-    <a href="../../../../2017/10/01/windows-pin-error/">
-      <i class="fa fa-arrow-circle-left"></i> Windows10でPINコードを入力してログインしようとするとエラーが発生
-    </a>
+  <div class="section">
+  
     
+
+
+<div class="section">
+  <span style="float: left;">
+  
+  
+  <a href="../../../../2017/10/01/windows-pin-error/">
+    <i class="fa fa-arrow-circle-left"></i>
+    Windows10でPINコードを入力してログインしようとするとエラーが発生
+  </a>
+  
   </span>
   <span>&nbsp;</span>
-  <span style="float: right">
-     
-    <a href="../../../../2019/08/15/onemix3_caps_to_ime_switch/">
-      OneMix3でCapsキーをIMEオン/オフキーに変更した <i
-        class="fa fa-arrow-circle-right"
-      ></i
-      >
-    </a>
-    
-  </span>
-</div>
+  <span style="float: right;">
   
-  <div class="section">
+  
+  <a href="../../../../2019/08/15/onemix3_caps_to_ime_switch/">
+    OneMix3でCapsキーをIMEオン/オフキーに変更した
+    <i class="fa fa-arrow-circle-right"></i>
+  </a>
+  </span>
+  
+</div>
+
+  
+  
+    <div class="section">
     <h2>Comments</h2>
     <div id="disqus_thread"></div>
     <script type="text/javascript">
-      var disqus_shortname = "m-yama";
-      var disqus_identifier = "/posts/2018/04/07/travis_python_version/";
-      var disqus_title = "Travis-CIでのPythonバージョンの変更";
-      var disqus_url = "https://m-yama.github.io/posts/2018/04/07/travis_python_version";
+        var disqus_shortname = 'm-yama';
+        var disqus_identifier = '/posts/2018/04/07/travis_python_version/';
+        var disqus_title = 'Travis-CIでのPythonバージョンの変更';
+        var disqus_url = 'https://m-yama.github.io/posts/2018/04/07/travis_python_version';
 
-      (function () {
-        var dsq = document.createElement("script");
-        dsq.type = "text/javascript";
-        dsq.async = true;
-        dsq.src = "//" + disqus_shortname + ".disqus.com/embed.js";
-        (
-          document.getElementsByTagName("head")[0] ||
-          document.getElementsByTagName("body")[0]
-        ).appendChild(dsq);
-      })();
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
     </script>
-    <noscript
-      >Please enable JavaScript to view the
-      <a href="https://disqus.com/?ref_noscript"
-        >comments powered by Disqus.</a
-      ></noscript
-    >
-    <a href="https://disqus.com" class="dsq-brlink"
-      >comments powered by <span class="logo-disqus">Disqus</span></a
-    >
-  </div>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
   
-</div>
+  </div>
 
           </div>
           
@@ -185,247 +170,215 @@ If you need to install Python packages, do it via pip and not apt.</p>
 
 
 
-  
-<h2>
-   <i class="fa fa-calendar"></i>
-  2018-04-07 
-</h2>
 
-<ul>
+  
+  
+  <h2>
+  
+  <i class="fa fa-calendar"></i>
+    2018-04-07
+  
+  </h2>
+
+  <ul>
+    
+
+  
+
+  
+
+  
+
+  
+  <li><i class="fa-fw fa fa-folder-open"></i>
+    
       
-<li id="category">
-  <span
-    ><i class="fa-fw fa fa-folder-open"></i></span
-  >
-   
-  <a href="../../../../../blog/category/blog/">blog</a>  
-</li>
- 
-<li id="tags">
-  <span
-    ><i
-      class="fa-fw fa fa-tag"
-    ></i
-    ></span
-  >
-   
-  <a href="../../../../../blog/tag/travis/">travis</a>  
-</li>
- 
-<li id="comments">
-  <script type="text/javascript">
+      <a href="../../../../../blog/category/blog/">blog</a>
+      
+    </li>
+  
+
+  
+  <li><i class="fa-fw fa fa-tag"></i>
+    
+      
+      <a href="../../../../../blog/tag/travis/">travis</a>
+      
+    </li>
+  
+  
+  <li>
+    <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = "m-yama"; // required: replace example with your forum shortname
+    var disqus_shortname = 'm-yama'; // required: replace example with your forum shortname
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function () {
-      var s = document.createElement("script");
-      s.async = true;
-      s.type = "text/javascript";
-      s.src = "//" + disqus_shortname + ".disqus.com/count.js";
-      (
-        document.getElementsByTagName("HEAD")[0] ||
-        document.getElementsByTagName("BODY")[0]
-      ).appendChild(s);
-    })();
-  </script>
-  <i class="fa-fw fa fa-comments"></i>
-  <a
-    href="#disqus_thread"
-    data-disqus-identifier="/posts/2018/04/07/travis_python_version/"
-  >
-    </a
-  >
-</li>
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+    </script>
+    <i class="fa-fw fa fa-comments"></i>
+    <a href="#disqus_thread" data-disqus-identifier="/posts/2018/04/07/travis_python_version/"> </a>
+  </li>
+  
+  </ul>
 
-</ul>
+
 <h3>ナビゲーション</h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../about/">About m-yama</a></li>
 </ul>
 
 
-<h3>
-  <a href="../../../../../blog/">Recent Posts</a>
-</h3>
-<ul>
-   
-  <li>
-    <a href="../../../../2020/11-12/ablog_upgrade/"
-      >12 November - Ablogのバージョンをアップグレード</a
-    >
-  </li>
-  
-  <li>
-    <a href="../../../../2019/08/19/powershell_crlf/"
-      >19 August - Powershellで改行コードをCRLFに一括置換する</a
-    >
-  </li>
-  
-  <li>
-    <a href="../../../../2019/08/15/onemix3_caps_to_ime_switch/"
-      >15 August - OneMix3でCapsキーをIMEオン/オフキーに変更した</a
-    >
-  </li>
-  
-  <li>
-    <a href="../../../../2017/10/01/windows-pin-error/"
-      >01 October - Windows10でPINコードを入力してログインしようとするとエラーが発生</a
-    >
-  </li>
-  
-  <li>
-    <a href="../../../../2017/08/12/blackberry-keyone-topics/"
-      >12 August - BlackBerry KEYone 小ネタ集</a
-    >
-  </li>
-  
-</ul>
+  <h3><a href="../../../../../blog/">Recent Posts</a></h3>
+  <ul>
+    
+    
+      <li><a href="../../../../2019/08/19/powershell_crlf/">Aug 19 - Powershellで改行コードをCRLFに一括置換する</a></li>
+    
+      <li><a href="../../../../2019/08/15/onemix3_caps_to_ime_switch/">Aug 15 - OneMix3でCapsキーをIMEオン/オフキーに変更した</a></li>
+    
+      <li><a href="../../../../2017/10/01/windows-pin-error/">Oct 01 - Windows10でPINコードを入力してログインしようとするとエラーが発生</a></li>
+    
+      <li><a href="../../../../2017/08/12/blackberry-keyone-topics/">Aug 12 - BlackBerry KEYone 小ネタ集</a></li>
+    
+      <li><a href="../../../../2017/08/11/embed-twitter/">Aug 11 - サイドバーにツイッターのタイムラインを埋め込む</a></li>
+    
+  </ul>
 
-<h3><a href="../../../../../blog/tag/">Tags</a></h3>
-<style type="text/css">
-  ul.ablog-cloud {
-    list-style: none;
-    overflow: auto;
-  }
-  ul.ablog-cloud li {
-    float: left;
-    height: 20pt;
-    line-height: 18pt;
-    margin-right: 5px;
-  }
-  ul.ablog-cloud a {
-    text-decoration: none;
-    vertical-align: middle;
-  }
-  li.ablog-cloud-1 {
-    font-size: 80%;
-  }
-  li.ablog-cloud-2 {
-    font-size: 95%;
-  }
-  li.ablog-cloud-3 {
-    font-size: 110%;
-  }
-  li.ablog-cloud-4 {
-    font-size: 125%;
-  }
-  li.ablog-cloud-5 {
-    font-size: 140%;
-  }
-</style>
-<ul class="ablog-cloud">
-   
-  <li class="ablog-cloud ablog-cloud-5">
-    <a href="../../../../../blog/tag/ablog/">ablog</a>
-  </li>
+  <h3><a href="../../../../../blog/tag/">Tags</a></h3>
+  <style type="text/css">
+    ul.ablog-cloud {list-style: none; overflow: auto;}
+    ul.ablog-cloud li {float: left; height: 20pt; line-height: 18pt; margin-right: 5px;}
+    ul.ablog-cloud a {text-decoration: none; vertical-align: middle;}
+    li.ablog-cloud-1{font-size: 80%;}
+    li.ablog-cloud-2{font-size: 95%;}
+    li.ablog-cloud-3{font-size: 110%;}
+    li.ablog-cloud-4{font-size: 125%;}
+    li.ablog-cloud-5{font-size: 140%;}
+  </style>
+  <ul class="ablog-cloud">
     
-  <li class="ablog-cloud ablog-cloud-1">
-    <a href="../../../../../blog/tag/blackberry/">blackberry</a>
-  </li>
+      
+      <li class="ablog-cloud ablog-cloud-5">
+        <a href="../../../../../blog/tag/ablog/">ablog</a></li>
+      
     
-  <li class="ablog-cloud ablog-cloud-1">
-    <a href="../../../../../blog/tag/font/">font</a>
-  </li>
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../../../../../blog/tag/blackberry/">blackberry</a></li>
+      
     
-  <li class="ablog-cloud ablog-cloud-3">
-    <a href="../../../../../blog/tag/gadget/">gadget</a>
-  </li>
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../../../../../blog/tag/font/">font</a></li>
+      
     
-  <li class="ablog-cloud ablog-cloud-2">
-    <a href="../../../../../blog/tag/github/">github</a>
-  </li>
+      
+      <li class="ablog-cloud ablog-cloud-3">
+        <a href="../../../../../blog/tag/gadget/">gadget</a></li>
+      
     
-  <li class="ablog-cloud ablog-cloud-1">
-    <a href="../../../../../blog/tag/keyboard/">keyboard</a>
-  </li>
+      
+      <li class="ablog-cloud ablog-cloud-2">
+        <a href="../../../../../blog/tag/github/">github</a></li>
+      
     
-  <li class="ablog-cloud ablog-cloud-1">
-    <a href="../../../../../blog/tag/onemix/">onemix</a>
-  </li>
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../../../../../blog/tag/keyboard/">keyboard</a></li>
+      
     
-  <li class="ablog-cloud ablog-cloud-1">
-    <a href="../../../../../blog/tag/powershell/">powershell</a>
-  </li>
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../../../../../blog/tag/onemix/">onemix</a></li>
+      
     
-  <li class="ablog-cloud ablog-cloud-1">
-    <a href="../../../../../blog/tag/python/">python</a>
-  </li>
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../../../../../blog/tag/powershell/">powershell</a></li>
+      
     
-  <li class="ablog-cloud ablog-cloud-1">
-    <a href="../../../../../blog/tag/smartphone/">smartphone</a>
-  </li>
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../../../../../blog/tag/python/">python</a></li>
+      
     
-  <li class="ablog-cloud ablog-cloud-1">
-    <a href="../../../../../blog/tag/smartwatch/">smartwatch</a>
-  </li>
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../../../../../blog/tag/smartphone/">smartphone</a></li>
+      
     
-  <li class="ablog-cloud ablog-cloud-3">
-    <a href="../../../../../blog/tag/sphinx/">sphinx</a>
-  </li>
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../../../../../blog/tag/smartwatch/">smartwatch</a></li>
+      
     
-  <li class="ablog-cloud ablog-cloud-1">
-    <a href="../../../../../blog/tag/travis/">travis</a>
-  </li>
+      
+      <li class="ablog-cloud ablog-cloud-3">
+        <a href="../../../../../blog/tag/sphinx/">sphinx</a></li>
+      
     
-  <li class="ablog-cloud ablog-cloud-1">
-    <a href="../../../../../blog/tag/twitter/">twitter</a>
-  </li>
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../../../../../blog/tag/travis/">travis</a></li>
+      
     
-  <li class="ablog-cloud ablog-cloud-1">
-    <a href="../../../../../blog/tag/windows/">windows</a>
-  </li>
-   
-</ul>
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../../../../../blog/tag/twitter/">twitter</a></li>
+      
+    
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../../../../../blog/tag/windows/">windows</a></li>
+      
+    
+  </ul>
 
-<h3>
-  <a href="../../../../../blog/category/">Categories</a>
-</h3>
-<ul>
-   
-  <li>
-    <a href="../../../../../blog/category/blog/">blog (23)</a>
-  </li>
-   
-</ul>
+  <h3><a href="../../../../../blog/category/">Categories</a></h3>
+  <ul>
+  
+    
+    <li><a href="../../../../../blog/category/blog/">blog (22)</a></li>
+    
+  
+  </ul>
 
-<h3>
-  <a href="../../../../../blog/archive/">Archives</a>
-</h3>
-<ul>
-   
-  <li>
-    <a href="../../../../../blog/2020/">2020 (1)</a>
-  </li>
+  <h3><a href="../../../../../blog/archive/">Archives</a></h3>
+  <ul>
+  
     
-  <li>
-    <a href="../../../../../blog/2019/">2019 (2)</a>
-  </li>
+    <li><a href="../../../../../blog/2019/">2019 (2)</a></li>
     
-  <li>
-    <a href="../../../../../blog/2018/">2018 (1)</a>
-  </li>
+  
     
-  <li>
-    <a href="../../../../../blog/2017/">2017 (10)</a>
-  </li>
+    <li><a href="../../../../../blog/2018/">2018 (1)</a></li>
     
-  <li>
-    <a href="../../../../../blog/2016/">2016 (9)</a>
-  </li>
-   
-</ul>
+  
+    
+    <li><a href="../../../../../blog/2017/">2017 (10)</a></li>
+    
+  
+    
+    <li><a href="../../../../../blog/2016/">2016 (9)</a></li>
+    
+  
+  </ul>
 
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">クイック検索</h3>
-    <div class="searchformwrapper">
+  <h3>クイック検索</h3>
     <form class="search" action="../../../../../search/" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="検索" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
     </form>
-    </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -435,7 +388,7 @@ If you need to install Python packages, do it via pip and not apt.</p>
       &copy;2016, m-yama.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.6</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

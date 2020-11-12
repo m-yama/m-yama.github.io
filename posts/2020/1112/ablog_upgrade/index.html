@@ -76,8 +76,8 @@
 <p>今まで ablog バージョンを指定して古いバージョンを使い続けていましたが、気が向いたので現行の最新バージョン（0.10.12）に更新しました。</p>
 <div class="section" id="ablog-deploy">
 <h2>ablog deploy できなくなった<a class="headerlink" href="#ablog-deploy" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<p>記事を書いて github に push すると、Travis でビルドされて github.io に自動でデプロイされる、という仕組みで運用しているのですが、 <code class="docutils literal notranslate"><span class="pre">ablog</span> <span class="pre">deploy</span></code> のところでコケるようになってしまいました。</p>
-<p>github と Travis は https で連携するようにしていたのですが、どうやら ssh で clone しようとしてエラーになっているようです。</p>
+<p>記事を書いて github に push すると、Travis CI でビルドされて github.io に自動でデプロイされる、という仕組みで運用しているのですが、 <code class="docutils literal notranslate"><span class="pre">ablog</span> <span class="pre">deploy</span></code> のところでコケるようになってしまいました。</p>
+<p>github と Travis CI は https で連携するようにしていたのですが、どうやら ssh で clone しようとしてエラーになっているようです。</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>ablog deploy --push-quietly --github-token<span class="o">=</span>DEPLOY_KEY -m<span class="o">=</span><span class="s2">&quot;`git log -1 --pretty=%B`&quot;</span>
 Cloning into <span class="s1">&#39;/home/travis/build/m-yama/myblog/m-yama.github.io&#39;</span>...
 

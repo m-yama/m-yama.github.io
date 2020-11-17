@@ -1,58 +1,68 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<html lang="ja">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Powershellで改行コードをCRLFに一括置換する &#8212; M-Yama BLOG</title>
-    
-    <link rel="stylesheet" href="../../../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../../../../',
-        VERSION:     '',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
-    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../../../../_static/translations.js"></script>
+    <link rel="stylesheet" href="../../../../../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+    <script src="../../../../../_static/jquery.js"></script>
+    <script src="../../../../../_static/underscore.js"></script>
+    <script src="../../../../../_static/doctools.js"></script>
+    <script src="../../../../../_static/language_data.js"></script>
+    <script src="../../../../../_static/translations.js"></script>
     <link rel="shortcut icon" href="../../../../../_static/favicon.ico"/>
     <link rel="author" title="このドキュメントについて" href="../../../../../about/" />
     <link rel="index" title="索引" href="../../../../../genindex/" />
-    <link rel="search" title="検索" href="../../../../../search/" />
-  
+    <link rel="search" title="検索" href="../../../../../search/" /> 
    
   <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
   
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+ 
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  href="../../../../../blog/atom.xml"
+  title="M-Yama BLOG"
+/>
+ 
+<link
+  rel="stylesheet"
+  href="../../../../../_static/css/font-awesome.min.css"
+  type="text/css"
+/>
 
-  
-  <link rel="alternate" type="application/atom+xml"  href="../../../../../blog/atom.xml" title="M-Yama BLOG">
-  
-  
-  <link rel="stylesheet" href="../../../../../_static/css/font-awesome.min.css" type="text/css" />
-  
-  <style type="text/css">
-    ul.ablog-archive {list-style: none; overflow: auto; margin-left: 0px}
-    ul.ablog-archive li {float: left; margin-right: 5px; font-size: 80%}
-    ul.postlist a {font-style: italic;}
-    ul.postlist-style-disc {list-style-type: disc;}
-    ul.postlist-style-none {list-style-type: none;}
-    ul.postlist-style-circle {list-style-type: circle;}
-  </style>
+<style type="text/css">
+  ul.ablog-archive {
+    list-style: none;
+    overflow: auto;
+    margin-left: 0px;
+  }
+  ul.ablog-archive li {
+    float: left;
+    margin-right: 5px;
+    font-size: 80%;
+  }
+  ul.postlist a {
+    font-style: italic;
+  }
+  ul.postlist-style-disc {
+    list-style-type: disc;
+  }
+  ul.postlist-style-none {
+    list-style-type: none;
+  }
+  ul.postlist-style-circle {
+    list-style-type: circle;
+  }
+</style>
 
-  </head>
-  <body role="document">
+  </head><body>
   
 
     <div class="document">
@@ -61,78 +71,90 @@
           
 
           <div class="body" role="main">
-            
-  <div class="section" id="powershellcrlf">
+             <div class="section" id="powershellcrlf">
 <h1>Powershellで改行コードをCRLFに一括置換する<a class="headerlink" href="#powershellcrlf" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>Powershellで、フォルダ内（サブフォルダ含む）のファイルの改行コードをCRLFに一括置換する。</p>
 <div class="section" id="csvshift-jis">
 <h2>CSVだけ対象にし、文字コードがShift_JISの場合<a class="headerlink" href="#csvshift-jis" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="highlight-powershell"><div class="highlight"><pre><span></span><span class="nb">ls </span><span class="n">-r</span> <span class="o">-file</span> <span class="n">-filter</span> <span class="p">*.</span><span class="n">csv</span> <span class="p">|</span> <span class="p">%</span> <span class="p">{</span> <span class="p">(</span><span class="nb">get-content</span> <span class="n">-encoding</span> <span class="k">Default</span> <span class="nv">$_</span><span class="p">.</span><span class="n">FullName</span><span class="p">)</span> <span class="n">-join</span> <span class="s2">&quot;</span><span class="se">`r`n</span><span class="s2">&quot;</span> <span class="p">|</span> <span class="nb">set-content</span> <span class="n">-encoding</span> <span class="k">Default</span> <span class="nv">$_</span><span class="p">.</span><span class="n">FullName</span> <span class="p">}</span>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nb">ls </span><span class="n">-r</span> <span class="o">-file</span> <span class="n">-filter</span> <span class="p">*.</span><span class="n">csv</span> <span class="p">|</span> <span class="p">%</span> <span class="p">{</span> <span class="p">(</span><span class="nb">get-content</span> <span class="n">-encoding</span> <span class="k">Default</span> <span class="nv">$_</span><span class="p">.</span><span class="n">FullName</span><span class="p">)</span> <span class="n">-join</span> <span class="s2">&quot;</span><span class="se">`r`n</span><span class="s2">&quot;</span> <span class="p">|</span> <span class="nb">set-content</span> <span class="n">-encoding</span> <span class="k">Default</span> <span class="nv">$_</span><span class="p">.</span><span class="n">FullName</span> <span class="p">}</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="csvutf8">
 <h2>CSV以外を対象にし、文字コードがUTF8の場合<a class="headerlink" href="#csvutf8" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="highlight-powershell"><div class="highlight"><pre><span></span><span class="nb">ls </span><span class="n">-r</span> <span class="o">-file</span> <span class="n">-exclude</span> <span class="p">*.</span><span class="n">csv</span> <span class="p">|</span> <span class="p">%</span> <span class="p">{</span> <span class="p">(</span><span class="nb">get-content</span> <span class="n">-encoding</span> <span class="n">UTF8</span> <span class="nv">$_</span><span class="p">.</span><span class="n">FullName</span><span class="p">)</span> <span class="n">-join</span> <span class="s2">&quot;</span><span class="se">`r`n</span><span class="s2">&quot;</span> <span class="p">|</span> <span class="nb">set-content</span> <span class="n">-encoding</span> <span class="n">UTF8</span> <span class="nv">$_</span><span class="p">.</span><span class="n">FullName</span> <span class="p">}</span>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nb">ls </span><span class="n">-r</span> <span class="o">-file</span> <span class="n">-exclude</span> <span class="p">*.</span><span class="n">csv</span> <span class="p">|</span> <span class="p">%</span> <span class="p">{</span> <span class="p">(</span><span class="nb">get-content</span> <span class="n">-encoding</span> <span class="n">UTF8</span> <span class="nv">$_</span><span class="p">.</span><span class="n">FullName</span><span class="p">)</span> <span class="n">-join</span> <span class="s2">&quot;</span><span class="se">`r`n</span><span class="s2">&quot;</span> <span class="p">|</span> <span class="nb">set-content</span> <span class="n">-encoding</span> <span class="n">UTF8</span> <span class="nv">$_</span><span class="p">.</span><span class="n">FullName</span> <span class="p">}</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">-filter</span></code> で対象のファイルの拡張子を指定。</li>
-<li><code class="docutils literal"><span class="pre">-exclude</span></code> で除外するファイルの拡張子を指定。</li>
-<li><code class="docutils literal"><span class="pre">`r`n</span></code> を <code class="docutils literal"><span class="pre">`n</span></code> に書き換えれば、LFに一括置換になるが、最後にCRLFの改行が入る。最後の改行を省くには <code class="docutils literal"><span class="pre">set-content</span> <span class="pre">-NoNewline</span></code> とする。</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-filter</span></code> で対象のファイルの拡張子を指定。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-exclude</span></code> で除外するファイルの拡張子を指定。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">`r`n</span></code> を <code class="docutils literal notranslate"><span class="pre">`n</span></code> に書き換えれば、LFに一括置換になるが、最後にCRLFの改行が入る。最後の改行を省くには <code class="docutils literal notranslate"><span class="pre">set-content</span> <span class="pre">-NoNewline</span></code> とする。</p></li>
 </ul>
 <div class="admonition note">
-<p class="first admonition-title">注釈</p>
-<ul class="last simple">
-<li>上記スクリプトはファイル自体が書き換わるので注意。</li>
-<li>UTF8はBOM付きになるので注意。BOM無しにするには <code class="docutils literal"><span class="pre">set-content</span></code> ではなく .NET Framework の <code class="docutils literal"><span class="pre">[System.IO.File]::WriteAllLines</span></code> メソッドなどを使う。</li>
+<p class="admonition-title">注釈</p>
+<ul class="simple">
+<li><p>上記スクリプトはファイル自体が書き換わるので注意。</p></li>
+<li><p>UTF8はBOM付きになるので注意。BOM無しにするには <code class="docutils literal notranslate"><span class="pre">set-content</span></code> ではなく .NET Framework の <code class="docutils literal notranslate"><span class="pre">[System.IO.File]::WriteAllLines</span></code> メソッドなどを使う。</p></li>
 </ul>
 </div>
 </div>
 </div>
 
-  <div class="section">
-  
-    
-
-
 <div class="section">
-  <span style="float: left;">
-  
-  
-  <a href="../../15/onemix3_caps_to_ime_switch/">
-    <i class="fa fa-arrow-circle-left"></i>
-    OneMix3でCapsキーをIMEオン/オフキーに変更した
-  </a>
-  
+     
+<div class="section">
+  <span style="float: left">
+     
+    <a href="../../15/onemix3_caps_to_ime_switch/">
+      <i class="fa fa-arrow-circle-left"></i> OneMix3でCapsキーをIMEオン/オフキーに変更した
+    </a>
+    
   </span>
   <span>&nbsp;</span>
-  <span style="float: right;">
-  
+  <span style="float: right">
+     
+    <a href="../../../../2020/11-12/ablog_upgrade/">
+      Ablogのバージョンをアップグレード <i
+        class="fa fa-arrow-circle-right"
+      ></i
+      >
+    </a>
+    
+  </span>
 </div>
-
   
-  
-    <div class="section">
+  <div class="section">
     <h2>Comments</h2>
     <div id="disqus_thread"></div>
     <script type="text/javascript">
-        var disqus_shortname = 'm-yama';
-        var disqus_identifier = '/posts/2019/08/19/powershell_crlf/';
-        var disqus_title = 'Powershellで改行コードをCRLFに一括置換する';
-        var disqus_url = 'https://m-yama.github.io/posts/2019/08/19/powershell_crlf';
+      var disqus_shortname = "m-yama";
+      var disqus_identifier = "/posts/2019/08/19/powershell_crlf/";
+      var disqus_title = "Powershellで改行コードをCRLFに一括置換する";
+      var disqus_url = "https://m-yama.github.io/posts/2019/08/19/powershell_crlf";
 
-        (function() {
-            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
+      (function () {
+        var dsq = document.createElement("script");
+        dsq.type = "text/javascript";
+        dsq.async = true;
+        dsq.src = "//" + disqus_shortname + ".disqus.com/embed.js";
+        (
+          document.getElementsByTagName("head")[0] ||
+          document.getElementsByTagName("body")[0]
+        ).appendChild(dsq);
+      })();
     </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-    </div>
-  
+    <noscript
+      >Please enable JavaScript to view the
+      <a href="https://disqus.com/?ref_noscript"
+        >comments powered by Disqus.</a
+      ></noscript
+    >
+    <a href="https://disqus.com" class="dsq-brlink"
+      >comments powered by <span class="logo-disqus">Disqus</span></a
+    >
   </div>
+  
+</div>
 
           </div>
           
@@ -151,215 +173,247 @@
 
 
 
+  
+<h2>
+   <i class="fa fa-calendar"></i>
+  2019-08-19 
+</h2>
 
-  
-  
-  <h2>
-  
-  <i class="fa fa-calendar"></i>
-    2019-08-19
-  
-  </h2>
-
-  <ul>
-    
-
-  
-
-  
-
-  
-
-  
-  <li><i class="fa-fw fa fa-folder-open"></i>
-    
+<ul>
       
-      <a href="../../../../../blog/category/blog/">blog</a>
-      
-    </li>
-  
-
-  
-  <li><i class="fa-fw fa fa-tag"></i>
-    
-      
-      <a href="../../../../../blog/tag/powershell/">powershell</a>
-      
-    </li>
-  
-  
-  <li>
-    <script type="text/javascript">
+<li id="category">
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
+  >
+   
+  <a href="../../../../../blog/category/blog/">blog</a>  
+</li>
+ 
+<li id="tags">
+  <span
+    ><i
+      class="fa-fw fa fa-tag"
+    ></i
+    ></span
+  >
+   
+  <a href="../../../../../blog/tag/powershell/">powershell</a>  
+</li>
+ 
+<li id="comments">
+  <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'm-yama'; // required: replace example with your forum shortname
+    var disqus_shortname = "m-yama"; // required: replace example with your forum shortname
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function () {
-    var s = document.createElement('script'); s.async = true;
-    s.type = 'text/javascript';
-    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-    </script>
-    <i class="fa-fw fa fa-comments"></i>
-    <a href="#disqus_thread" data-disqus-identifier="/posts/2019/08/19/powershell_crlf/"> </a>
-  </li>
-  
-  </ul>
+      var s = document.createElement("script");
+      s.async = true;
+      s.type = "text/javascript";
+      s.src = "//" + disqus_shortname + ".disqus.com/count.js";
+      (
+        document.getElementsByTagName("HEAD")[0] ||
+        document.getElementsByTagName("BODY")[0]
+      ).appendChild(s);
+    })();
+  </script>
+  <i class="fa-fw fa fa-comments"></i>
+  <a
+    href="#disqus_thread"
+    data-disqus-identifier="/posts/2019/08/19/powershell_crlf/"
+  >
+    </a
+  >
+</li>
 
-
+</ul>
 <h3>ナビゲーション</h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../about/">About m-yama</a></li>
 </ul>
 
 
-  <h3><a href="../../../../../blog/">Recent Posts</a></h3>
-  <ul>
-    
-    
-      <li><a href="../../15/onemix3_caps_to_ime_switch/">Aug 15 - OneMix3でCapsキーをIMEオン/オフキーに変更した</a></li>
-    
-      <li><a href="../../../../2018/04/07/travis_python_version/">Apr 07 - Travis-CIでのPythonバージョンの変更</a></li>
-    
-      <li><a href="../../../../2017/10/01/windows-pin-error/">Oct 01 - Windows10でPINコードを入力してログインしようとするとエラーが発生</a></li>
-    
-      <li><a href="../../../../2017/08/12/blackberry-keyone-topics/">Aug 12 - BlackBerry KEYone 小ネタ集</a></li>
-    
-      <li><a href="../../../../2017/08/11/embed-twitter/">Aug 11 - サイドバーにツイッターのタイムラインを埋め込む</a></li>
-    
-  </ul>
+<h3>
+  <a href="../../../../../blog/">Recent Posts</a>
+</h3>
+<ul>
+   
+  <li>
+    <a href="../../../../2020/11-12/ablog_upgrade/"
+      >12 November - Ablogのバージョンをアップグレード</a
+    >
+  </li>
+  
+  <li>
+    <a href="../../15/onemix3_caps_to_ime_switch/"
+      >15 August - OneMix3でCapsキーをIMEオン/オフキーに変更した</a
+    >
+  </li>
+  
+  <li>
+    <a href="../../../../2018/04/07/travis_python_version/"
+      >07 April - Travis-CIでのPythonバージョンの変更</a
+    >
+  </li>
+  
+  <li>
+    <a href="../../../../2017/10/01/windows-pin-error/"
+      >01 October - Windows10でPINコードを入力してログインしようとするとエラーが発生</a
+    >
+  </li>
+  
+  <li>
+    <a href="../../../../2017/08/12/blackberry-keyone-topics/"
+      >12 August - BlackBerry KEYone 小ネタ集</a
+    >
+  </li>
+  
+</ul>
 
-  <h3><a href="../../../../../blog/tag/">Tags</a></h3>
-  <style type="text/css">
-    ul.ablog-cloud {list-style: none; overflow: auto;}
-    ul.ablog-cloud li {float: left; height: 20pt; line-height: 18pt; margin-right: 5px;}
-    ul.ablog-cloud a {text-decoration: none; vertical-align: middle;}
-    li.ablog-cloud-1{font-size: 80%;}
-    li.ablog-cloud-2{font-size: 95%;}
-    li.ablog-cloud-3{font-size: 110%;}
-    li.ablog-cloud-4{font-size: 125%;}
-    li.ablog-cloud-5{font-size: 140%;}
-  </style>
-  <ul class="ablog-cloud">
+<h3><a href="../../../../../blog/tag/">Tags</a></h3>
+<style type="text/css">
+  ul.ablog-cloud {
+    list-style: none;
+    overflow: auto;
+  }
+  ul.ablog-cloud li {
+    float: left;
+    height: 20pt;
+    line-height: 18pt;
+    margin-right: 5px;
+  }
+  ul.ablog-cloud a {
+    text-decoration: none;
+    vertical-align: middle;
+  }
+  li.ablog-cloud-1 {
+    font-size: 80%;
+  }
+  li.ablog-cloud-2 {
+    font-size: 95%;
+  }
+  li.ablog-cloud-3 {
+    font-size: 110%;
+  }
+  li.ablog-cloud-4 {
+    font-size: 125%;
+  }
+  li.ablog-cloud-5 {
+    font-size: 140%;
+  }
+</style>
+<ul class="ablog-cloud">
+   
+  <li class="ablog-cloud ablog-cloud-5">
+    <a href="../../../../../blog/tag/ablog/">ablog</a>
+  </li>
     
-      
-      <li class="ablog-cloud ablog-cloud-5">
-        <a href="../../../../../blog/tag/ablog/">ablog</a></li>
-      
+  <li class="ablog-cloud ablog-cloud-1">
+    <a href="../../../../../blog/tag/blackberry/">blackberry</a>
+  </li>
     
-      
-      <li class="ablog-cloud ablog-cloud-1">
-        <a href="../../../../../blog/tag/blackberry/">blackberry</a></li>
-      
+  <li class="ablog-cloud ablog-cloud-1">
+    <a href="../../../../../blog/tag/font/">font</a>
+  </li>
     
-      
-      <li class="ablog-cloud ablog-cloud-1">
-        <a href="../../../../../blog/tag/font/">font</a></li>
-      
+  <li class="ablog-cloud ablog-cloud-3">
+    <a href="../../../../../blog/tag/gadget/">gadget</a>
+  </li>
     
-      
-      <li class="ablog-cloud ablog-cloud-3">
-        <a href="../../../../../blog/tag/gadget/">gadget</a></li>
-      
+  <li class="ablog-cloud ablog-cloud-2">
+    <a href="../../../../../blog/tag/github/">github</a>
+  </li>
     
-      
-      <li class="ablog-cloud ablog-cloud-2">
-        <a href="../../../../../blog/tag/github/">github</a></li>
-      
+  <li class="ablog-cloud ablog-cloud-1">
+    <a href="../../../../../blog/tag/keyboard/">keyboard</a>
+  </li>
     
-      
-      <li class="ablog-cloud ablog-cloud-1">
-        <a href="../../../../../blog/tag/keyboard/">keyboard</a></li>
-      
+  <li class="ablog-cloud ablog-cloud-1">
+    <a href="../../../../../blog/tag/onemix/">onemix</a>
+  </li>
     
-      
-      <li class="ablog-cloud ablog-cloud-1">
-        <a href="../../../../../blog/tag/onemix/">onemix</a></li>
-      
+  <li class="ablog-cloud ablog-cloud-1">
+    <a href="../../../../../blog/tag/powershell/">powershell</a>
+  </li>
     
-      
-      <li class="ablog-cloud ablog-cloud-1">
-        <a href="../../../../../blog/tag/powershell/">powershell</a></li>
-      
+  <li class="ablog-cloud ablog-cloud-1">
+    <a href="../../../../../blog/tag/python/">python</a>
+  </li>
     
-      
-      <li class="ablog-cloud ablog-cloud-1">
-        <a href="../../../../../blog/tag/python/">python</a></li>
-      
+  <li class="ablog-cloud ablog-cloud-1">
+    <a href="../../../../../blog/tag/smartphone/">smartphone</a>
+  </li>
     
-      
-      <li class="ablog-cloud ablog-cloud-1">
-        <a href="../../../../../blog/tag/smartphone/">smartphone</a></li>
-      
+  <li class="ablog-cloud ablog-cloud-1">
+    <a href="../../../../../blog/tag/smartwatch/">smartwatch</a>
+  </li>
     
-      
-      <li class="ablog-cloud ablog-cloud-1">
-        <a href="../../../../../blog/tag/smartwatch/">smartwatch</a></li>
-      
+  <li class="ablog-cloud ablog-cloud-3">
+    <a href="../../../../../blog/tag/sphinx/">sphinx</a>
+  </li>
     
-      
-      <li class="ablog-cloud ablog-cloud-3">
-        <a href="../../../../../blog/tag/sphinx/">sphinx</a></li>
-      
+  <li class="ablog-cloud ablog-cloud-1">
+    <a href="../../../../../blog/tag/travis/">travis</a>
+  </li>
     
-      
-      <li class="ablog-cloud ablog-cloud-1">
-        <a href="../../../../../blog/tag/travis/">travis</a></li>
-      
+  <li class="ablog-cloud ablog-cloud-1">
+    <a href="../../../../../blog/tag/twitter/">twitter</a>
+  </li>
     
-      
-      <li class="ablog-cloud ablog-cloud-1">
-        <a href="../../../../../blog/tag/twitter/">twitter</a></li>
-      
-    
-      
-      <li class="ablog-cloud ablog-cloud-1">
-        <a href="../../../../../blog/tag/windows/">windows</a></li>
-      
-    
-  </ul>
+  <li class="ablog-cloud ablog-cloud-1">
+    <a href="../../../../../blog/tag/windows/">windows</a>
+  </li>
+   
+</ul>
 
-  <h3><a href="../../../../../blog/category/">Categories</a></h3>
-  <ul>
-  
-    
-    <li><a href="../../../../../blog/category/blog/">blog (22)</a></li>
-    
-  
-  </ul>
+<h3>
+  <a href="../../../../../blog/category/">Categories</a>
+</h3>
+<ul>
+   
+  <li>
+    <a href="../../../../../blog/category/blog/">blog (23)</a>
+  </li>
+   
+</ul>
 
-  <h3><a href="../../../../../blog/archive/">Archives</a></h3>
-  <ul>
-  
+<h3>
+  <a href="../../../../../blog/archive/">Archives</a>
+</h3>
+<ul>
+   
+  <li>
+    <a href="../../../../../blog/2020/">2020 (1)</a>
+  </li>
     
-    <li><a href="../../../../../blog/2019/">2019 (2)</a></li>
+  <li>
+    <a href="../../../../../blog/2019/">2019 (2)</a>
+  </li>
     
-  
+  <li>
+    <a href="../../../../../blog/2018/">2018 (1)</a>
+  </li>
     
-    <li><a href="../../../../../blog/2018/">2018 (1)</a></li>
+  <li>
+    <a href="../../../../../blog/2017/">2017 (10)</a>
+  </li>
     
-  
-    
-    <li><a href="../../../../../blog/2017/">2017 (10)</a></li>
-    
-  
-    
-    <li><a href="../../../../../blog/2016/">2016 (9)</a></li>
-    
-  
-  </ul>
+  <li>
+    <a href="../../../../../blog/2016/">2016 (9)</a>
+  </li>
+   
+</ul>
 
 <div id="searchbox" style="display: none" role="search">
-  <h3>クイック検索</h3>
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../../../../search/" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="検索" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="検索" />
     </form>
+    </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -369,7 +423,7 @@
       &copy;2016, m-yama.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.6</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>
